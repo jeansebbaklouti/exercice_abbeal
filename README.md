@@ -1,5 +1,5 @@
- Exercice pour Abbeal
- ====================
+Exercice pour Abbeal
+====================
 
 Pour faire fonctionner le projet il faut installer npm et node et lancer ces commandes à la racine du projet.
 .. code-block:: javascript
