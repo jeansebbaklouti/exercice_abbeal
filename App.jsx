@@ -56,12 +56,13 @@ class App extends React.Component {
                <div className="col-md-9">  
                 <table className="table table-hover">
                       <thead>
-                        <tr> <th>#</th><th>Nom</th> <th>Prénom</th> <th>-</th> </tr>
+                        <tr> <th>#</th><th>Nom</th> <th>Prénom</th>  <th>Classe</th><th>Suppression</th> </tr>
                       </thead>
                      <ReactCSSTransitionGroup transitionName="student_example" className="animated-list" component="tbody">
                       {this.state.data.map((person, i)=><TableRow key = {i} data = {person} onChange={this.updateStudent} />)}
                       </ReactCSSTransitionGroup>
                   </table>
+                  <HelpBlock>Pour editer les informations d'un élève existant, "cliquer" sur le "champ" à modifier et presser "entrer" pour "sauvegarder". </HelpBlock>
                 </div>
               </div>
               </div>
@@ -74,7 +75,7 @@ class Header extends React.Component {
    render() {
       return (
          <div className="renard">
-            <h1>Les éleves de Poudlard</h1>
+            <h1>Les élèves de Poudlard</h1>
          </div>
       );
    }
@@ -86,23 +87,20 @@ class TableRow extends React.Component {
      super(props);
      // This binding is necessary to make `this` work in the callback
      this.deleteStudent = this.deleteStudent.bind(this);
-     this.editStudent = this.editStudent.bind(this);
+     //can be factorized
      this.editStudentName = this.editStudentName.bind(this);
      this.editStudentFirstName = this.editStudentFirstName.bind(this);
-     this.state = {editable: false};
+     this.editStudentClassRoom = this.editStudentClassRoom.bind(this);
+     this.state = {editable: true};
 
    }
    deleteStudent(e){
        e.preventDefault();
-       this.editStudent(false);
+       this.state = {editable: false};
        this.props.onChange(this.props.data.id);
    }
-   editStudent (editable){
-      this.setState({editable:editable}); 
-   }
-
    editStudentName (editable,value){
-      this.editStudent(editable);
+      this.setState({editable:true});
       if(value !=null){
         this.props.data.name = value;
         this.props.onChange(this.props.data.id,this.props.data);
@@ -110,9 +108,17 @@ class TableRow extends React.Component {
    }
 
    editStudentFirstName (editable,value){
-      this.editStudent(editable);
+      this.setState({editable:true});
       if(value !=null){
         this.props.data.firstName = value;
+        this.props.onChange(this.props.data.id,this.props.data);
+      }
+   }
+
+  editStudentClassRoom (editable,value){
+      this.setState({editable:true});
+      if(value !=null){
+        this.props.data.classRoom = value;
         this.props.onChange(this.props.data.id,this.props.data);
       }
    }
@@ -123,6 +129,7 @@ class TableRow extends React.Component {
                 <Row rowElement={this.props.data.id} editable={false} />
                 <Row rowElement={this.props.data.name} editable={this.state.editable} onChange={this.editStudentName}/>
                 <Row rowElement={this.props.data.firstName} editable={this.state.editable}  onChange={this.editStudentFirstName}/>
+                <Row rowElement={this.props.data.classRoom} editable={this.state.editable}  onChange={this.editStudentClassRoom}/>
                 <td><button onClick={this.deleteStudent}><Glyphicon glyph="trash" /> </button></td> 
               </tr>
            );
@@ -135,24 +142,29 @@ class Row extends React.Component {
      super(props);
       this.changeStudent = this.changeStudent.bind(this);
       this.saveStudent = this.saveStudent.bind(this);
+      this.state ={editable:false}
      
 
    }
    changeStudent(e){
        e.preventDefault();
+       this.setState({editable:true});
        this.props.onChange(true);
+      
    }
    saveStudent (e){
     
       if (e.keyCode == 13) {
          e.preventDefault();
-         this.props.onChange(false,e.target.value);
+         this.setState({editable:false});
+         this.props.onChange(true,e.target.value);
+         
       }
    }
 
    render() {
       let td = null;
-      if (this.props.editable) {
+      if (this.state.editable && this.props.editable ) {
          td =  <td><input defaultValue={this.props.rowElement} onKeyDown={this.saveStudent} /></td>;
        } else {
          td =  <td onClick={this.changeStudent}>{this.props.rowElement}</td>;
@@ -184,11 +196,13 @@ class StudentForm extends React.Component {
           {
             id: this.newId(this.props.data),
             name: this.name.value,
-            firstName:this.firstName.value
+            firstName:this.firstName.value,
+            classRoom:this.classRoom.value
            }
        );
        this.name.value = "";
        this.firstName.value = "";
+       this.classRoom.value = "";
    }
 
  render() {
@@ -207,6 +221,11 @@ class StudentForm extends React.Component {
             type="text"
             ref={(input) => this.firstName = ReactDOM.findDOMNode(input)} 
             placeholder="prénom"
+          />
+          <FormControl
+            type="text"
+            ref={(input) => this.classRoom = ReactDOM.findDOMNode(input)} 
+            placeholder="Classe"
           />
           <FormControl.Feedback />
         </FormGroup>
