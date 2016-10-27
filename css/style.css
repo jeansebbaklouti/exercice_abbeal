@@ -1,0 +1,17 @@
+.student_example-enter {
+  opacity: 0.01;
+}
+
+.student_example-enter.student_example-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.student_example-leave {
+  opacity: 1;
+}
+
+.student_example-leave.student_example-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

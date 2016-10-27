@@ -1,0 +1,37 @@
+{
+  "name": "react-abbeal",
+  "version": "1.0.0",
+  "description": "exercice pour abbeal",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --hot",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeansebbaklouti/exercice_abbeal"
+  },
+  "keywords": [
+    "reactjs",
+    "abbeal"
+  ],
+  "author": "Jean-Sébastien Baklouti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeansebbaklouti/exercice_abbeal/issues"
+  },
+  "homepage": "https://github.com/jeansebbaklouti/exercice_abbeal",
+  "dependencies": {
+    "npm": "^3.10.9",
+    "react": "^15.3.2",
+    "react-addons-css-transition-group": "^15.3.2",
+    "react-bootstrap": "^0.30.5",
+    "react-dom": "^15.3.2",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
+  },
+  "devDependencies": {
+    "css-loader": "^0.25.0",
+    "style-loader": "^0.13.1"
+  }
+}
