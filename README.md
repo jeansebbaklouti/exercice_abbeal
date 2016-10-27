@@ -1,2 +1,2 @@
 # exercice_abbeal
-Juste an exervice for Abbeal
+Juste an exercice for Abbeal
